@@ -54,10 +54,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 
-$route['index'] = 'frontend/index';
+$route['index'] = 'Ernest/index';
 
 
-$route['default_controller'] = 'frontend/index';
+$route['default_controller'] = 'Ernest/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
