@@ -1,5 +1,5 @@
 <?php
-class frontend extends MY_Controller {
+class Ernest extends MY_Controller {
 
     public function __construct(){
 
