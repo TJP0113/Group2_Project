@@ -23,6 +23,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+
+
+$protocol = "http://";
+if(isset($_SERVER['SERVER_PORT'])) {
+	switch($_SERVER['SERVER_PORT']){
+		case "443":
+			$protocol = "https://";
+			break;
+		default:
+			$protocol = "http://";
+			break;
+	}
+}
+
+
+
 $config['base_url'] = '';
 
 /*
