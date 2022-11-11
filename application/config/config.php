@@ -39,7 +39,7 @@ if(isset($_SERVER['SERVER_PORT'])) {
 
 
 
-$config['base_url'] = '';
+$config['base_url'] = 'http://Group2_Project.local/';
 
 /*
 |--------------------------------------------------------------------------
