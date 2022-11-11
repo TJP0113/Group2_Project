@@ -39,7 +39,11 @@ if(isset($_SERVER['SERVER_PORT'])) {
 
 
 
-$config['base_url'] = 'http://Group2_Project.local/';
+if(isset($_SERVER['HTTP_HOST'])) {
+	$config['base_url'] = $protocol.$_SERVER['HTTP_HOST']."/";
+} else {
+	$config['base_url'] = $protocol.'Group2_Project.local/';	
+}
 
 /*
 |--------------------------------------------------------------------------
