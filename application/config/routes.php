@@ -55,6 +55,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 $route['index'] = 'Ernest/index';
+$route['member_portal'] = 'Jp/member_portal';
+$route['adddetail'] = 'Jp/adddetail';
+$route['adddetail_submit'] = 'Jp/adddetail_submit';
 
 
 $route['default_controller'] = 'Ernest/index';
