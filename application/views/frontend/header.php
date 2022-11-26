@@ -24,7 +24,7 @@
   <link href="<?=base_url('assets/vendor/boxicons/css/boxicons.min.css')?>" rel="stylesheet">
   <link href="<?=base_url('assets/vendor/glightbox/css/glightbox.min.css')?>" rel="stylesheet">
   <link href="<?=base_url('assets/vendor/swiper/swiper-bundle.min.css')?>" rel="stylesheet">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <!-- Template Main CSS File -->
   <link href="<?=base_url('assets/css/style.css" rel="stylesheet')?>">
 

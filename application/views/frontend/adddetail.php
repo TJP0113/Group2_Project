@@ -4,7 +4,7 @@
     <input name="email"/>
     <input name="mobile"/>
     <input name="password"/>
-
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="one">
     <button type="submit">submit</button>
 
 </form>
@@ -18,7 +18,7 @@
     <input name="IG_link"/>
     <input name="TWINTTER_link"/>
     
-
+    <input type="checkbox" class="form-check-input" id="exampleCheck1"  name="two">
 
     <button type="submit">submit</button>
 
@@ -30,7 +30,7 @@
     <input name="type"/>
     <input name="max_person"/>
     <input name="min_person"/>
-
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="three">
     <button type="submit">submit</button>
 
 </form>
