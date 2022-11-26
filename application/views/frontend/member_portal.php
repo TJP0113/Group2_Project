@@ -73,7 +73,7 @@
                             Serial : <?=$v['serial']?>
                         </div>
                         <div class="col m-3" style="text-align:right;">
-                            Date : 2022-1-13
+                            Date : <?=$v['date']?>
                         </div>
                         <hr />
                         <div class="row">

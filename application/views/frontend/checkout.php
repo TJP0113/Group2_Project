@@ -86,11 +86,15 @@
                 </div>
             </div>
             <div class="row">
-              <div class="form-group mt-3 col-md-9">
+              <div class="form-group mt-3 col-md-6">
                   <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Your Mobile" required>
               </div>
               <div class="form-group mt-3 col-md-3">
                   <input type="number" class="form-control" name="qty" id="qty" placeholder="Person/Pax" max="12" min="2" required>
+              </div>
+
+              <div class="form-group mt-3 col-md-3">
+                  <input type="date" class="form-control" name="date" id="date"  required>
               </div>
             </div>
             

@@ -197,6 +197,7 @@ class Jp extends MY_Controller {
        $mobile = $this->load->input('mobile',true);
        $payment_id = $this->load->input('payment_id',true);
        $qty = $this->load->input('qty',true);
+       $date = $this->load->input('date',true);
        $remark = $this->load->input('remark',true);
        $final_amount = $this->load->input('final_amount',true);
 
@@ -228,6 +229,7 @@ class Jp extends MY_Controller {
         'member_id'=>$_SEESION['member_id'],
         'serial'=>time(),
         'total_amount'=>$final_amount,
+        'date'=>$date,
         'person_number'=>$qty,
         'name'=>$name,
         'email'=>$email,
