@@ -55,6 +55,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 $route['index'] = 'Ernest/index';
+$route['add_cart'] = 'Ernest/add_cart';
+$route['menu_detail/(:num)']= 'Ernest/menu_detail/$1';
 
 
 $route['default_controller'] = 'Ernest/index';
