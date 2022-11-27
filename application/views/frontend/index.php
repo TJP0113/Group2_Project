@@ -125,17 +125,31 @@
             <div class="menu-ingredients">
               <?= $m['description'] ?>
             </div>
-            <form action="add_cart" method="POST">
-              <div class="">
-                <input type="hidden" value="<?= $m['title'] ?>" name="menu_title">
-                <input type="hidden" value="<?= $m['menu_id'] ?>" name="menu_id">
-                <input type="hidden" value="<?= $m['price'] ?>" name="price">
-                <input type="number" name="qty">
-                <?php
-                ?>
-                <button type="submit" class="btn btn-secondary">Add</button>
+            <?php
+            if(empty($_SESSION['member_id'])){
+            ?>
+              <div>
+              <span class="badge bg-secondary">Pls login before add to cart</span>
               </div>
-            </form>
+              
+            <?php
+              }else{
+            ?>
+              <form action="add_cart" method="POST">
+                <div class="">
+                  <input type="hidden" value="<?= $m['title'] ?>" name="menu_title">
+                  <input type="hidden" value="<?= $m['menu_id'] ?>" name="menu_id">
+                  <input type="hidden" value="<?= $m['price'] ?>" name="price">
+                  <input type="number" name="qty" value="1" min="1">
+                  <?php
+                  ?>
+                  <button type="submit" class="btn btn-secondary">Add</button>
+                </div>
+              </form>
+
+            <?php
+            }
+            ?>
           </div>
         <?php
         }
@@ -228,65 +242,7 @@
     </div>
   </section><!-- End Specials Section -->
   <!-- ======= Book A Table Section ======= -->
-  <section id="book-a-table" class="book-a-table">
-    <div class="container" data-aos="fade-up">
-
-      <div class="section-title">
-        <h2>Reservation</h2>
-        <p>Book a Table</p>
-      </div>
-
-      <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
-        <div class="row">
-          <div class="col-lg-4 col-md-6 form-group">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-            <div class="validate"></div>
-          </div>
-          <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
-            <div class="validate"></div>
-          </div>
-          <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-            <input type="text" class="form-control" name="mobile" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-            <div class="validate"></div>
-          </div>
-          <div class="col-lg-4 col-md-6 form-group mt-3">
-            <input type="text" name="date" class="form-control" id="date" placeholder="xxxx-xx-xx" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-            <div class="validate"></div>
-          </div>
-          <div class="col-lg-4 col-md-6 form-group mt-3 form-floating">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-              <?php
-              foreach ($menu as $m) {
-              ?>
-                <option value="menu_id">
-                  <?= $m['title'] ?>
-                </option>
-              <?php
-              }
-              ?>
-            </select>
-            <div class="validate"></div>
-          </div>
-          <div class="col-lg-4 col-md-6 form-group mt-3">
-            <input type="number" class="form-control" name="people" id="people" placeholder="# of people" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
-            <div class="validate"></div>
-          </div>
-        </div>
-        <div class="form-group mt-3">
-          <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-          <div class="validate"></div>
-        </div>
-        <div class="mb-3">
-          <div class="loading">Loading</div>
-          <div class="error-message"></div>
-          <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-        </div>
-        <div class="text-center"><button type="submit">Book a Table</button></div>
-      </form>
-
-    </div>
-  </section><!-- End Book A Table Section -->
+  
 
   <!-- ======= Testimonials Section ======= -->
   <section id="testimonials" class="testimonials section-bg">
@@ -544,31 +500,9 @@
 
         </div>
 
-        <div class="col-lg-8 mt-5 mt-lg-0">
+        <div class="col-lg-8 mt-5 mt-lg-0" style="text-align:center; margin:0 auto;">
 
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-              </div>
-              <div class="col-md-6 form-group mt-3 mt-md-0">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-              </div>
-            </div>
-            <div class="form-group mt-3">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-            </div>
-            <div class="form-group mt-3">
-              <textarea class="form-control" name="message" rows="8" placeholder="Message" required></textarea>
-            </div>
-            <div class="my-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Send Message</button></div>
-          </form>
-
+          <a href="#menu" class="btn btn-outline-primary">Start Booking a Order</a>
         </div>
 
       </div>

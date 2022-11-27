@@ -167,22 +167,34 @@ class Jp extends MY_Controller {
             'is_deleted'=>0
         ]);
 
-        $booking_deteil = $this->Booking_model->get_where([
+        $booking_detail = $this->Booking_model->get_where([
             'member_id'=>$_SESSION['member_id'],
             'is_deleted'=>0
         ]);
 
-        foreach($booking_deteil as $v){
-            $total_amount = $v['price'] * $v['qty'];
-            $final_amount = $final_amount += $total_amount;
+        $final_amount =0 ;
+        $total_qty =0 ;
 
-            $booking_dateil['total_amount'] = $total_amount;
+        foreach($booking_detail as $k=>$v){
+            
+            $total_amount = 0;
+            $total_amount = $v['menu_price'] * $v['quantity'];
+            
+            $final_amount = $final_amount + $total_amount;
+            $total_qty = $total_qty + $v['quantity'];
+            
+            $booking_detail[$k]['total_amount'] = $total_amount;
             
         };
+        $qty_item =count($booking_detail);
+        $this->data['qty_item'] = $qty_item;
+        $this->data['total_qty'] = $total_qty;
         $this->data['final_amount'] = $final_amount;
 
-        $this->data['booking_detail'] = $booking_dateil;
+        $this->data['booking_detail'] = $booking_detail;
         $this->data['member_data'] = $member_data;
+
+        
 
         $this->load->view('frontend/header',$this->data);
         $this->load->view('frontend/checkout',$this->data);
@@ -192,14 +204,15 @@ class Jp extends MY_Controller {
 
     public function checkout_submit(){
 
-       $name = $this->load->input('name',true);
-       $email = $this->load->input('email',true);
-       $mobile = $this->load->input('mobile',true);
-       $payment_id = $this->load->input('payment_id',true);
-       $qty = $this->load->input('qty',true);
-       $date = $this->load->input('date',true);
-       $remark = $this->load->input('remark',true);
-       $final_amount = $this->load->input('final_amount',true);
+    
+        $name=$this->input->post("name",true);
+       $email = $this->input->post('email',true);
+       $mobile = $this->input->post('mobile',true);
+       $payment_id = $this->input->post('payment_id',true);
+       $qty = $this->input->post('qty',true);
+       $date = $this->input->post('date',true);
+       $remark = $this->input->post('remark',true);
+       $final_amount = $this->input->post('final_amount',true);
 
 
        $this->load->model('Booking_model');
@@ -211,22 +224,13 @@ class Jp extends MY_Controller {
         'is_deleted'=>0
        ]);
 
-       $payment_id = $this->Payment_model->insert([
+       
 
-        'member_id'=>$_SESSION['member-id'],
-        'menu_id'=>$booking_deteil['menu_id'],
-        'menu_title'=>$booking_deteil['menu_title'],
-        'menu_price'=>$booking_deteil['menu_price'],
-        'menu_qty'=>$booking_deteil['menu_qty'],
-        'is_deleted'=>0,
-        'created_date'=>date('Y-m-d H:i:s')
 
-       ]);
+       $bill_id = $this->Check_out_model->insert([
 
-       $this->Check_out_model->insert([
-
-        'payment_id'=>$payment_id,
-        'member_id'=>$_SEESION['member_id'],
+        
+        'member_id'=>$_SESSION['member_id'],
         'serial'=>time(),
         'total_amount'=>$final_amount,
         'date'=>$date,
@@ -238,6 +242,24 @@ class Jp extends MY_Controller {
         'is_deleted'=>0,
         'created_date'=>date('Y-m-d H:i:s')
        ]);
+
+       foreach($booking_detail as $b){
+            $this->Payment_model->insert([
+            'bill_id'=>$bill_id,
+            'member_id'=>$_SESSION['member_id'],
+            'menu_id'=>$booking_deteil['menu_id'],
+            'menu_title'=>$booking_deteil['menu_title'],
+            'menu_price'=>$booking_deteil['menu_price'],
+            'menu_qty'=>$booking_deteil['menu_qty'],
+            'is_deleted'=>0,
+            'created_date'=>date('Y-m-d H:i:s')
+    
+           ]);
+       }
+
+       
+
+       
 
        foreach($booking_deteil as $v){
 
@@ -262,9 +284,9 @@ class Jp extends MY_Controller {
 
     public function member_edit_submit(){
 
-        $name = $this->load->input('name',true);
-        $email = $this->load->input('email',true);
-        $mobile = $this->load->input('mobile',true);
+        $name = $this->input->post('name',true);
+        $email = $this->input->post('email',true);
+        $mobile = $this->input->post('mobile',true);
 
         $this->load->model('Member_model');
 
@@ -305,7 +327,7 @@ class Jp extends MY_Controller {
         $this->load->model('Booking_model');
 
         $this->Booking_model->update([
-            'menu_id'=>$id
+            'booking_id'=>$id
         ],[
             'is_deleted'=>1
         ]);

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +9,7 @@
   <title>Group 2 Restaurant</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-  <script src="jquery-3.6.0.min.js"></script>
+  
 
   <!-- Favicons -->
   <link href="<?= base_url('assets/img/favicon.png" rel="icon') ?>">
@@ -49,10 +50,13 @@
       </div>
 
       <div class="languages d-none d-md-flex align-items-center">
-        <ul>
-          <li>En</li>
-          <li><a href="#">De</a></li>
-        </ul>
+        <?php
+        if(!empty($_SESSION['member_id'])){
+        ?>
+        <span class="badge rounded-pill bg-light text-dark">Hi , <?=$_SESSION['member_name']?></span>
+        <?php
+          }
+        ?>
       </div>
     </div>
   </div>
@@ -67,27 +71,80 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="<?=base_url('index')?>">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#menu">Menu</a></li>
           <li><a class="nav-link scrollto" href="#specials">Specials</a></li>
-          <li><a class="nav-link scrollto" href="#events">Events</a></li>
-          <li><a class="nav-link scrollto" href="#chefs">Chefs</a></li>
           <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
-          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down"></i></a>
+          <li><a class="nav-link scrollto" href="#chefs">Chefs</a></li>
+          
+          <li class="dropdown"><a href="#"><span>More Action</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="#">Login</a></li>
-              <li><a href="#">Logout</a></li>
-              <li><a href="#">Sign Up</a></li>
-              <li><a href="#">Member Details </a></li>
+              <?php
+                if(empty($_SESSION['member_id'])){
+              ?>
+              <li><a href="<?=base_url('login')?>">Login</a></li>
+              <li><a href="<?=base_url('signup')?>">Sign Up</a></li>
+
+              <?php
+                }else{
+              ?>
+              <li><a href="<?=base_url('logout')?>">Logout</a></li>
+              
+              <li><a href="<?=base_url('member_portal')?>">Member Details </a></li>
+
+              <?php
+                }
+              ?>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <button type="button" class="book-a-table-btn scrollto d-none d-lg-flex" data-bs-toggle="modal" data-bs-target="#exampleModal">Cart</button>
+      <a class="book-a-table-btn scrollto d-none d-lg-flex dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" >Cart</a>
+      <div class="dropdown-menu p-4 text-muted" style="max-width: 300px;" aria-labelledby="dropdownMenuButton">
+        <ol class="list-group list-group-numbered">
+          <?php
+          if(!empty($cart)){
+            foreach($cart as $k => $c){
 
+          
+          ?>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold"><?=$c['menu_title']?></div>
+              <?=$c['menu_price']?> x <?=$c['quantity']?>
+            </div>
+            
+          </li>
+          
+          <?php
+          }
+          ?>
+          <div>
+            <table class="table table-border">
+              <tr>
+                <th>Total Amount:</th>
+                <th>$<?=$final_amount?></th>
+              </tr>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col"><a href="checkout" class="btn btn-success">Check Out</a></div>
+            
+          </div>
+          <?php
+            }else{
+          ?>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            NOTHING IN YOUR CART
+          </li>
+          <?php
+          }
+          ?>
+        </ol>
+      </div>
 
     </div>
   </header><!-- End Header -->

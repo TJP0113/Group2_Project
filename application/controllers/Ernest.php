@@ -10,8 +10,32 @@ class Ernest extends MY_Controller {
       $this->load->model("Menu_model");
       $this->load->model("Booking_model");
       $this->load->model("Chef_model");
+      
+      if(!empty($_SESSION['member_id'])){
+        
+        $cart = $this->Booking_model->get_where([
+          'member_id'=>$_SESSION['member_id'],
+          'is_deleted'=>0
+        ]);
+
+        
+        foreach($cart as $c){
+          $final_amount =0;
+          $final_amount = $final_amount + $c['quantity'] * $c['menu_price'];
+          
+          
 
 
+
+        }
+        if(!empty($cart)){
+          $this->data['final_amount']=$final_amount;
+        }
+        
+        
+        $this->data['cart']=$cart;
+      }
+      
       
       $menu = $this->Menu_model->get_where([
         'is_deleted'=>0
@@ -27,6 +51,7 @@ class Ernest extends MY_Controller {
       // ]);
       
       $this->data['menu']=$menu;
+      
       $this->data['chef']=$chef;
 
       // $this->data['booking']=$booking;
@@ -53,8 +78,10 @@ class Ernest extends MY_Controller {
         'member_id'     => $_SESSION['member_id'],
         'menu_title'    => $menu_title,
         'menu_id'       => $menu_id,
-        'price'         => $price,
-        'qty'           => $qty
+        'menu_price'    => $price,
+        'quantity'      => $qty,
+        'is_deleted'=>0,
+        'created_date'=>date('Y-m-d H:i:s')
     
       ]);
       redirect(base_url('index'));

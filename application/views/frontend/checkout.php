@@ -1,3 +1,4 @@
+
 <!-- ======= Hero Section ======= -->
 <section >
   
@@ -18,46 +19,51 @@
                         <th>Menu</th>
                         <th>Price</th>
                         <th>Qty</th>
+                        <th>Action</th>
                         <th style="text-align:right;">Total Price</th>
                     </tr>
 
                 </theard>
                 <tbody>
-                    <tr>
+                    
                       <?php
                         if(!empty($booking_detail)){
-                          foreach($booking_detail as $b){
+                          foreach($booking_detail as$k => $b){
                         
                       ?>
-                        <td>1.</td>
+                      <tr>
+                        <td><?=$k+1?>.</td>
                         <td><?=$b['menu_title']?></td>
-                        <td>$<?=$b['price']?></td>
-                        <td><?=$b['qty']?></td>
+                        <td>$<?=$b['menu_price']?></td>
+                        <td><?=$b['quantity']?></td>
                         <td>
-                          <form action="checkout_delete" method="post">
-                            <input type="hidde" name="menu_id" value="<?=$b['menu_id']?>"/>
+                          <form action="<?=base_url('checkout_delete/'.$b['booking_id'])?>" method="post">
+                            
                             <button class="btn btn-danger" type="submit">X</button>
                           </form>
                           
                         </td>
                         <td style="text-align:right;">$<?=$b['total_amount']?></td>
-                        
+                      </tr>
                       <?php
                         }}
                       ?>
-                    </tr>
+                    
                 </tbody>
 
                 <tfoot>
                     <tr>
-                        <th colspan="5">Total Item:</th>
-                        
+                        <th colspan="5" style="color:red;">Total Item :</th>
+                        <th style="text-align:right; color:red;"> Total Amount :</th>
                     </tr>
                     <tr>
-                        <th>5</th>
+                        <th>
+                          <?=$qty_item?>
+                        </th>
                         <th></th>
                         <th></th>
-                        <th>10</th>
+                        <th><?=$total_qty?></th>
+                        <th></th>
                         <th style="text-align:right;" id="final_amount">$<?=$final_amount?></th>
                     </tr>
                 </tfoot>
@@ -75,7 +81,7 @@
           <input class="form-check-input" type="checkbox" id="autofill" />
           <label class="form-check-label" for="google"> Fill in as Member detail </label>
         </div>
-        <form action="checkout_submit" method="post" role="form" class="php-email-form">
+        <form action="<?=base_url('checkout_submit')?>" method="post" >
             <div class="row">
 
                 <div class="col-md-6 form-group">
@@ -112,12 +118,22 @@
 </div>
 
 <script>
-  $('#autofill').click(function(){
+  
+  $('#autofill').change(function(){
+    if($('#name').val() == ""){
+      console.log('hi');
+      $("#name").val('<?=$member_data['member_name']?>');
+      $("#email").val('<?=$member_data['member_email']?>');
+      $("#mobile").val('<?=$member_data['member_mobile']?>');
+    }else if($('#name').val() !== '<?=$member_data['member_name']?>'){
+      
 
-    console.log('hi');
-    $("#name").val($member_data['member_name']);
-    $("#email").val($member_data['member_email']);
-    $("#mobile").val($member_data['member_mobile']);
+   
+    }else{
+      $("#name").val('');
+      $("#email").val('');
+      $("#mobile").val('');
+    }
   })
 
   

@@ -100,9 +100,13 @@ class Candy extends MY_Controller
         }
     }
 
-    public function signout()
+    public function logout()
     {
 
+        unset(
+            $_SESSION['member_name'],
+            $_SESSION['member_id']
+        );  
         redirect(base_url('login'));
     }
 }
