@@ -18,9 +18,9 @@ class Ernest extends MY_Controller {
           'is_deleted'=>0
         ]);
 
-        
+        $final_amount =0;
         foreach($cart as $c){
-          $final_amount =0;
+          
           $final_amount = $final_amount + $c['quantity'] * $c['menu_price'];
           
           

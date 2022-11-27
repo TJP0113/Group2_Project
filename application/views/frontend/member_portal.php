@@ -35,7 +35,7 @@
                     <table class="table table-hover">
                         <tr>
                             <th>Name : </th>
-                            <td><span class="badge bg-light text-dark"><?=$memebr['member_name']?></span></td>
+                            <td><span class="badge bg-light text-dark"><?=$member['member_name']?></span></td>
                         </tr>
 
                         <tr>
@@ -80,7 +80,7 @@
                             <div class="col">
                                 <span class="badge rounded-pill bg-light text-dark">People
                                     :<?=$v['person_number']?></span>
-                                <span class="badge rounded-pill bg-light text-dark">Table :8</span>
+                                <span class="badge rounded-pill bg-light text-dark">Remark :<?=$v['remark']?></span>
 
                             </div>
                         </div>
@@ -90,12 +90,12 @@
 
                                 <tr>
                                     <?php
-                                    foreach($order as $o => $v){
+                                    foreach($v['order'] as $o => $b){
                                     ?>
                                     <tb>
-                                        <div class="menu-content">1. <a href="#"><?=$v['menu_title']?>
-                                            </a>--------------------------------<span> $<?=$v['menu_price']?></span> x
-                                            <?=$v['menu_qty']?></div>
+                                        <div class="menu-content">1. <a href="#"><?=$b['menu_title']?>
+                                            </a>--------------------------------<span> $<?=$b['menu_price']?></span> x
+                                            <?=$b['menu_qty']?></div>
                                     </tb>
 
                                     <?php
@@ -117,7 +117,7 @@
                                 </tr>
                                 <tr>
                                     <td>Qty :</td>
-                                    <td>5</td>
+                                    <td><?=count($v['order'])?></td>
 
 
                                 </tr>

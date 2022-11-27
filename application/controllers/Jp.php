@@ -19,7 +19,7 @@ class Jp extends MY_Controller {
         $this->load->model('Check_out_model');
         $this->load->model('Payment_model');
 
-        if(!empty($_SEESION['member_id'])){
+        if(!empty($_SESSION['member_id'])){
 
             $member = $this->Member_model->get_one([
 
@@ -38,6 +38,8 @@ class Jp extends MY_Controller {
                 'is_deleted'=>0
             ]);
 
+            
+
 
             if(!empty($data)){
 
@@ -45,14 +47,16 @@ class Jp extends MY_Controller {
                 foreach($data as $k => $v){
 
                     $data1 = $this->Payment_model->get_where([
-                        'payment_id'=>$v['payment_id'],
-                        'id_deleted'=>0
+                        'bill_id'=>$v['bill_id'],
+                        'is_deleted'=>0
                     ]);
 
                     $data[$k]['order'] = $data1;
                     
                 }
             }
+
+            
 
             $this->data['data'] = $data;
 
@@ -219,7 +223,7 @@ class Jp extends MY_Controller {
        $this->load->model('Payment_model');
        $this->load->model('Check_out_model');
 
-       $booking_deteil = $this->Booking_model->get_where([
+       $booking_detail = $this->Booking_model->get_where([
         'member_id'=>$_SESSION['member_id'],
         'is_deleted'=>0
        ]);
@@ -247,10 +251,10 @@ class Jp extends MY_Controller {
             $this->Payment_model->insert([
             'bill_id'=>$bill_id,
             'member_id'=>$_SESSION['member_id'],
-            'menu_id'=>$booking_deteil['menu_id'],
-            'menu_title'=>$booking_deteil['menu_title'],
-            'menu_price'=>$booking_deteil['menu_price'],
-            'menu_qty'=>$booking_deteil['menu_qty'],
+            'menu_id'=>$b['menu_id'],
+            'menu_title'=>$b['menu_title'],
+            'menu_price'=>$b['menu_price'],
+            'menu_qty'=>$b['quantity'],
             'is_deleted'=>0,
             'created_date'=>date('Y-m-d H:i:s')
     
@@ -261,7 +265,7 @@ class Jp extends MY_Controller {
 
        
 
-       foreach($booking_deteil as $v){
+       foreach($booking_detail as $v){
 
             $this->Booking_model->update([
                 'booking_id'=>$v['booking_id']
