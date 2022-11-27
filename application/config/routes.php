@@ -55,11 +55,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 $route['index'] = 'Ernest/index';
+$route['add_cart'] = 'Ernest/add_cart';
+$route['menu_detail/(:num)']= 'Ernest/menu_detail/$1';
+
 
 $route['signup'] = 'Candy/signup';
 $route['signup_submit'] = 'Candy/signup_submit';
 $route['login'] = 'Candy/login';
 $route['login_submit'] = 'Candy/login_submit';
+
+
+$route['member_portal'] = 'Jp/member_portal';
+$route['adddetail'] = 'Jp/adddetail';
+$route['adddetail_submit'] = 'Jp/adddetail_submit';
+$route['checkout'] = 'Jp/checkout';
+$route['checkout_submit'] = 'Jp/checkout_submit';
+$route['thank'] = 'Jp/thank';
+$route['member_edit_submit'] = 'Jp/member_edit_submit';
+$route['checkout_delete/(:num)'] = 'Jp/member_edit_submit/$1';
 
 
 $route['default_controller'] = 'Ernest/index';

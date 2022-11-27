@@ -1,9 +1,7 @@
-<?php class Booking_model extends My_Model{
+<?php
+class Booking_model extends MY_Model {
 
-    protected $table_name ="booking";
+    protected $table_name = "booking";
 }
-
-
-
 
 ?>

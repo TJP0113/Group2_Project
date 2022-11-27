@@ -82,8 +82,10 @@ if(isset($_GET['errorMessage'])){
 
 
   <main class="form-signup w-100 m-auto" style="text-align:center ;">
+
     <form method="POST" action="<?= ("signup_submit") ?>"> 
     <section></section>
+
       <h1 class="h3 mb-3 fw-normal" style="color: white">Registration Form</h1>
 
       <div class="form-floating">
@@ -106,11 +108,7 @@ if(isset($_GET['errorMessage'])){
         <label for="floatingPassword"></label>
       </div>
 
-      <!-- <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" name="remember" value="1"> Remember me </label>
 
-      </div> -->
       <div>
         <button class=" btn btn-lg btn-primary" type="submit">Sign Up</button> <br />
 

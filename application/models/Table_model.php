@@ -1,9 +1,7 @@
-<?php class Table_model extends My_Model{
+<?php
+class Table_model extends MY_Model {
 
-protected $table_name ="table";
+    protected $table_name = "table";
 }
-
-
-
 
 ?>

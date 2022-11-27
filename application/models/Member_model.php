@@ -1,9 +1,7 @@
-<?php class Member_model extends My_Model{
+<?php
+class Member_model extends MY_Model {
 
-protected $table_name ="member";
+    protected $table_name = "member";
 }
-
-
-
 
 ?>

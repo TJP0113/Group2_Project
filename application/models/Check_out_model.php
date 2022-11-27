@@ -1,9 +1,7 @@
-<?php class Check_out_model extends My_Model{
+<?php
+class Check_out_model extends MY_Model {
 
-protected $table_name ="check_out";
+    protected $table_name = "check_out";
 }
-
-
-
 
 ?>
