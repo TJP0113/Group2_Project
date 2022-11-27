@@ -56,9 +56,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['index'] = 'Ernest/index';
 
+$route['signup'] = 'Candy/signup';
+$route['signup_submit'] = 'Candy/signup_submit';
+$route['login'] = 'Candy/login';
+$route['login_submit'] = 'Candy/login_submit';
+
 
 $route['default_controller'] = 'Ernest/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
 
 
