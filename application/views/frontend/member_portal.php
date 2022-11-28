@@ -93,7 +93,7 @@
                                     foreach($v['order'] as $o => $b){
                                     ?>
                                     <tb>
-                                        <div class="menu-content">1. <a href="#"><?=$b['menu_title']?>
+                                        <div class="menu-content"><?=$o+1?>. <a href="#"><?=$b['menu_title']?>
                                             </a>--------------------------------<span> $<?=$b['menu_price']?></span> x
                                             <?=$b['menu_qty']?></div>
                                     </tb>
