@@ -33,14 +33,14 @@ class Candy extends MY_Controller
 
 
         // define new user data not same as previous user data
-
+        $password = sha1($member_password);
 
         $member_data = $this->Member_model->get_where([
             "is_deleted" => 0
         ]);
 
         foreach ($member_data as $i) {
-            if ($i['member_email'] == $member_email || $i['member_password'] == $member_password) {
+            if ($i['member_email'] == $member_email || $i['member_password'] == $password) {
                 redirect(base_url('signup?errorMessage'));
             } 
         }
@@ -50,7 +50,7 @@ class Candy extends MY_Controller
             "member_name" => $member_name,
             "member_email" => $member_email,
             "member_mobile" => $member_mobile,
-            "member_password" => $member_password,
+            "member_password" => $password,
             "created_date" => date('Y-m-d H:i:s')
 
         ]);
@@ -81,11 +81,13 @@ class Candy extends MY_Controller
         //     set_cookie('member_password', $member_password, 30 * 24 * 3600);
         // }
 
+        $password =sha1($member_password);
+
         $this->load->model("Member_model");
 
         $memberData = $this->Member_model->get_one([
             'member_email'         => $member_email,
-            'member_password'           => $member_password,
+            'member_password'           => $password,
             'is_deleted'    => 0,
         ]);
 

@@ -75,6 +75,17 @@ $route['thank'] = 'Jp/thank';
 $route['member_edit_submit'] = 'Jp/member_edit_submit';
 $route['checkout_delete/(:num)'] = 'Jp/checkout_delete/$1';
 
+$route['api/check'] = 'Api/check';
+$route['api/register'] = 'Api/register';
+$route['api/login'] = 'Api/login';
+$route['api/Checkout'] = 'Api/Checkout';
+$route['api/GetMember/(:any)'] = 'Api/GetMember/$1';
+$route['api/GetCart/(:any)'] = 'Api/GetCart/$1';
+$route['api/GetMenu'] = 'Api/GetMenu';
+$route['api/GetMenuDetail/(:any)'] = 'Api/GetMenuDetail/$1';
+
+
+
 
 $route['default_controller'] = 'Ernest/index';
 $route['404_override'] = '';

@@ -9,6 +9,10 @@
             <h3>$<?= $menu_detail['price'] ?></h3>
         </div>
         <p><?= $menu_detail['description'] ?></p>
+
+        <?php
+        if(!empty($_SESSION['member_id'])){
+        ?>
         
         <form action="<?=base_url('add_cart')?>" method="POST">
             <div>
@@ -19,5 +23,14 @@
                 <button type="submit" class="btn btn-secondary">Add</button>
             </div>
         </form>
+
+        <?php
+            }else{
+        ?>
+
+            <span class="badge bg-secondary">Pls login before add to cart</span>
+        <?php
+            }
+        ?>
     </div>
 </div>
