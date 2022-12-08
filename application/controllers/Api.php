@@ -537,67 +537,96 @@ class Api extends MY_apicontroller {
 
     }
 
-    public function AddCart($token,$menu_id){
+    public function AddCart(){
+
+        header('Content-Type: application/json; charset=utf-8');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
         try {
 
-            if(empty($token)) {
-                throw new Exception("token cannot be blank");
-            }
-            if(empty($card_id)) {
-                throw new Exception("card_id cannot be blank");
-            }
+	        if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
+	            $_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
 
-            $this->load->model("User_token_model");
+                $token = $this->input->post("token", true);
+                $menu_id = $this->input->post("menu_id", true);
+                $qty = $this->input->post("qty", true);
+	            
             
-            $tokenData = $this->User_token_model->get_one([
-                        'token' => $token,
-                        'is_deleted' => 0,
-            ]);
-            if(empty($tokenData)) {
-                throw new Exception("Invalid Token");
-            }
 
-            $this->load->model("Member_model");
+                if(empty($token)) {
+                    throw new Exception("token cannot be blank");
+                }
+                if(empty($qty)) {
+                    throw new Exception("qty cannot be blank");
+                }
+                if(empty($menu_id)) {
+                    throw new Exception("menu_id cannot be blank");
+                }
+                
+                
 
-                $MemberData = $this->Member_model->get_one([
-                    'member_id' => $tokenData['member_id'],
-                    
+                
+                
+
+                $this->load->model("User_token_model");
+                $tokenData = $this->User_token_model->get_one([
+                            'token' => $token,
+                            'is_deleted' => 0,
+                ]);
+                if(empty($tokenData)) {
+                    throw new Exception("Invalid Token");
+                }
+
+                $this->load->model("Member_model");
+
+                $memberExist = $this->Member_model->get_one([
+                    'member_email' => $email,
+                    'is_deleted' => 0,
+                    'member_id !='=>$tokenData['member_id']
+                ]);
+                if(!empty($memberExist)) {
+                    throw new Exception("Email has already been used");
+                }
+
+                $this->load->model("Menu_model");
+                $menu = $this->Menu_model->get_one([
+                    'menu_id' => $menu_id,
                     'is_deleted' => 0,
                 ]);
 
-            $this->load->model("Menu_model");
+                $this->load->mode('Booking_model');
 
-            $menu = $this->Menu_model->get_one([
-                'menu_id'=>$menu_id,
-                'id_deleted'=>0
-            ]);
-            
+                $this->Booking_model->insert([
 
-            $this->load->model("Booking_model");
+                    'booking_name'  => $memberExist['member_name'],
+                    'member_id'     => $memberExist['member_id'],
+                    'menu_title'    => $menu['menu_title'],
+                    'menu_id'       => $menu['menu_id'],
+                    'menu_price'    => $menu['menu_price'],
+                    'quantity'      => $qty,
+                    'is_deleted'=>0,
+                    'created_date'=>date('Y-m-d H:i:s')
+                ]);
 
-            $menu_detail = $this->Booking_model->insert([
-                
-                'booking_name'  => $MemberData['member_name'],
-                'member_id'     => $MemberData['member_id'],
-                'menu_title'    => $menu['menu_title'],
-                'menu_id'       => $menu_id,
-                'menu_price'    => $$menu['price'],
-                'quantity'      => $$menu['qty'],
-                'is_deleted'=>0,
-                'created_date'=>date('Y-m-d H:i:s')
+
                 
 
-            ]);
+                
+                $this->json_output(array(
+                    
+                    
+                ));
 
-            $this->json_output(array(
                 
-                
-            ));
+            } else {
+                throw new Exception("Invalid param");
+            }
 
         } catch (Exception $e) {
             $this->json_output_error($e->getMessage());
         }
+
 
     }
 
