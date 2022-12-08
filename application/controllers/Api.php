@@ -178,7 +178,7 @@ class Api extends MY_apicontroller {
 
             $this->json_output(array(
                 'member' => $memberExist,
-                'order_detail' => $order_detail,
+                'order_Detail' => $order_detail,
             ));
 
         } catch (Exception $e) {
@@ -426,6 +426,172 @@ class Api extends MY_apicontroller {
 
             $this->json_output(array(
                 'menu_detail' => $menu_detail,
+                
+            ));
+
+        } catch (Exception $e) {
+            $this->json_output_error($e->getMessage());
+        }
+
+    }
+
+    public function EditMember(){
+
+        header('Content-Type: application/json; charset=utf-8');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+
+        try {
+
+	        if(isset($_SERVER["CONTENT_TYPE"]) && strpos($_SERVER["CONTENT_TYPE"], "application/json") !== false) {
+	            $_POST = array_merge($_POST, (array) json_decode(trim(file_get_contents('php://input')), true));
+
+                $token = $this->input->post("token", true);
+                $name = $this->input->post("name", true);
+	            $email = $this->input->post("email", true);
+                $mobile = $this->input->post("mobile", true);
+                $password = $this->input->post("password", true);
+            
+
+                if(empty($token)) {
+                    throw new Exception("token cannot be blank");
+                }
+                if(empty($name)) {
+                    throw new Exception("name cannot be blank");
+                }
+                if(empty($email)) {
+                    throw new Exception("email cannot be blank");
+                }
+                if(empty($mobile)) {
+                    throw new Exception("mobile cannot be blank");
+                }
+                
+
+                
+                
+
+                $this->load->model("User_token_model");
+                $tokenData = $this->User_token_model->get_one([
+                            'token' => $token,
+                            'is_deleted' => 0,
+                ]);
+                if(empty($tokenData)) {
+                    throw new Exception("Invalid Token");
+                }
+
+                $this->load->model("Member_model");
+
+                $memberExist = $this->Member_model->get_one([
+                    'member_email' => $email,
+                    'is_deleted' => 0,
+                    'member_id !='=>$tokenData['member_id']
+                ]);
+                if(!empty($memberExist)) {
+                    throw new Exception("Email has already been used");
+                }
+
+
+                if(!empty($password)) {
+                    $pwd =sha1($password);
+
+                    $this->load->model("Member_model");
+
+                    $this->Member_model->update([
+                        'member_id' => $tokenData['member_id'],
+                    ],[
+                        'member_name'=>$name,
+                        'member_email'=>$email,
+                        'member_mobile'=>$mobile,
+                        'member_password'=>$pwd
+                        
+                    ]);
+                }else{
+                    $this->load->model("Member_model");
+
+                    $this->Member_model->update([
+                        'member_id' => $tokenData['member_id'],
+                    ],[
+                        'member_name'=>$name,
+                        'member_email'=>$email,
+                        'member_mobile'=>$mobile,
+                        
+                        
+                    ]);
+                }
+
+                
+                $this->json_output(array(
+                    
+                    
+                ));
+
+                
+            } else {
+                throw new Exception("Invalid param");
+            }
+
+        } catch (Exception $e) {
+            $this->json_output_error($e->getMessage());
+        }
+
+
+    }
+
+    public function AddCart($token,$menu_id){
+
+        try {
+
+            if(empty($token)) {
+                throw new Exception("token cannot be blank");
+            }
+            if(empty($card_id)) {
+                throw new Exception("card_id cannot be blank");
+            }
+
+            $this->load->model("User_token_model");
+            
+            $tokenData = $this->User_token_model->get_one([
+                        'token' => $token,
+                        'is_deleted' => 0,
+            ]);
+            if(empty($tokenData)) {
+                throw new Exception("Invalid Token");
+            }
+
+            $this->load->model("Member_model");
+
+                $MemberData = $this->Member_model->get_one([
+                    'member_id' => $tokenData['member_id'],
+                    
+                    'is_deleted' => 0,
+                ]);
+
+            $this->load->model("Menu_model");
+
+            $menu = $this->Menu_model->get_one([
+                'menu_id'=>$menu_id,
+                'id_deleted'=>0
+            ]);
+            
+
+            $this->load->model("Booking_model");
+
+            $menu_detail = $this->Booking_model->insert([
+                
+                'booking_name'  => $MemberData['member_name'],
+                'member_id'     => $MemberData['member_id'],
+                'menu_title'    => $menu['menu_title'],
+                'menu_id'       => $menu_id,
+                'menu_price'    => $$menu['price'],
+                'quantity'      => $$menu['qty'],
+                'is_deleted'=>0,
+                'created_date'=>date('Y-m-d H:i:s')
+                
+
+            ]);
+
+            $this->json_output(array(
+                
                 
             ));
 
