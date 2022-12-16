@@ -223,16 +223,15 @@ class Api extends MY_apicontroller {
                 $final_amount = $final_amount + $c['quantity'] * $c['menu_price'];
         
             }
-            if(!empty($cart)){
-            $cart['final_amount']=$final_amount;
-            }
             
             
-            $this->data['cart']=$cart;
+            
+            
 
             $this->json_output(array(
                 'member' => $memberExist,
                 'cart' => $cart,
+                'totalAmount'=>$final_amount
             ));
 
         } catch (Exception $e) {
@@ -256,7 +255,7 @@ class Api extends MY_apicontroller {
                 $name = $this->input->post("name", true);
                 $email = $this->input->post("email", true);
                 $mobile = $this->input->post("mobile", true);
-                $person_qty = $this->input->post("person_qty", true);
+                $person_qty = $this->input->post("person_number", true);
 	            $date = $this->input->post("date", true);
                 $remark = $this->input->post("remark", true);
                 $final_amount = $this->input->post("final_amount", true);
@@ -334,6 +333,7 @@ class Api extends MY_apicontroller {
                    ]);
             
                    foreach($booking_detail as $b){
+                        $this->load->model('Payment_model');
                         $this->Payment_model->insert([
                         'bill_id'=>$bill_id,
                         'member_id'=>$MemberData['member_id'],
@@ -581,12 +581,12 @@ class Api extends MY_apicontroller {
                 $this->load->model("Member_model");
 
                 $memberExist = $this->Member_model->get_one([
-                    'member_email' => $email,
+                    
                     'is_deleted' => 0,
-                    'member_id !='=>$tokenData['member_id']
+                    'member_id'=>$tokenData['member_id']
                 ]);
-                if(!empty($memberExist)) {
-                    throw new Exception("Email has already been used");
+                if(empty($memberExist)) {
+                    throw new Exception("Unvalid User");
                 }
 
                 $this->load->model("Menu_model");
@@ -595,15 +595,15 @@ class Api extends MY_apicontroller {
                     'is_deleted' => 0,
                 ]);
 
-                $this->load->mode('Booking_model');
+                $this->load->model('Booking_model');
 
                 $this->Booking_model->insert([
 
                     'booking_name'  => $memberExist['member_name'],
                     'member_id'     => $memberExist['member_id'],
-                    'menu_title'    => $menu['menu_title'],
+                    'menu_title'    => $menu['title'],
                     'menu_id'       => $menu['menu_id'],
-                    'menu_price'    => $menu['menu_price'],
+                    'menu_price'    => $menu['price'],
                     'quantity'      => $qty,
                     'is_deleted'=>0,
                     'created_date'=>date('Y-m-d H:i:s')
