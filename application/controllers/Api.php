@@ -223,14 +223,20 @@ class Api extends MY_apicontroller {
                 $final_amount = $final_amount + $c['quantity'] * $c['menu_price'];
         
             }
+
             
             
+            $cart_list =[];
+            if(!empty($cart)){
+                $cart_list = $cart;
+            }
             
             
 
             $this->json_output(array(
+                'cart'=>$cart_list,
                 'member' => $memberExist,
-                'cart' => $cart,
+                
                 'totalAmount'=>$final_amount
             ));
 
